@@ -67,6 +67,6 @@ public class ApiConnector {
             mapaCurrent.put(sSplit[0].substring(1, sSplit[0].length() - 1), sSplit[1]);
         }
         
-        return mapaCurrent.get("temp");
+        return mapaCurrent.get("temp") + " " + mapaCurrent.get("main");
     }
 }
