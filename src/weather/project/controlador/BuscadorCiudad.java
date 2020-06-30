@@ -8,39 +8,105 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.maps.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import org.apache.log4j.Logger;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 
 /**
  *http://julien.gunnm.org/geek/programming/2015/09/13/how-to-get-geocoding-information-in-java-without-google-maps-api/
  * @author fabio
  */
 public class BuscadorCiudad {
-    final String apiKey = "AIzaSyAETXgZ4JVmr_qvNkqruDy9b7kQfA6E5Bc";
-    String ciudad;
+    private JSONParser jsonParser;
     
-    public BuscadorCiudad(String ciudad){
-        this.ciudad = ciudad;
+    public BuscadorCiudad(){
+        jsonParser = new JSONParser();
     }
     
-    public void getCiudad() throws MalformedURLException, IOException{
-        String sUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + ciudad + "&key=" + apiKey;
+    private String getRequest(String url) throws Exception{
+        final URL obj = new URL(url);
+        final HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         
-        URL url = new URL(sUrl);
-        URLConnection request = url.openConnection();
+        con.connect();
         
-        request.connect();
+        if(con.getResponseCode() != 200){
+            return null;
+        }
         
-        //Convertimos el objeto retornado
-        JsonParser jp = new JsonParser(); //de la libreria gson
-        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convertimos el objecto en un json
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
         
-        JsonObject rootObj = root.getAsJsonObject();
+        while((inputLine = in.readLine()) != null){
+            response.append(inputLine);
+        }
+        in.close();
+        
+        return response.toString();
+    }
+    
+    public Map<String, Double> getCoordinates(String adress){
+        Map<String, Double> res;
+        StringBuffer query;
+        String[] split = adress.split(" ");
+        String queryResult = null;
+        
+        query = new StringBuffer();
+        res = new HashMap<String, Double>();
+        
+        query.append("https://nominatim.openstreetmap.org/search?q=");
+        
+        if(split.length == 0){
+            return null;
+        }
+        
+        for(int i = 0; i < split.length; ++i){
+            query.append(split[i]);
+            if(i < (split.length - 1)){
+                query.append("+");
+            }
+        }
+        
+        query.append("&format=json&addressdetails=1");
+        
+        try{
+            queryResult = getRequest(query.toString());
+        }catch(Exception e){
+            
+        }
+        
+        if(queryResult == null){
+            return null;
+        }
+        
+        Object obj = JSONValue.parse(queryResult);
+        
+        if(obj instanceof JSONArray){
+            JSONArray array = (JSONArray) obj;
+            
+            if(array.size() > 0){
+                JSONObject jsonObject = (JSONObject) array.get(0);
+                
+                String lon = (String) jsonObject.get("lon");
+                String lat = (String) jsonObject.get("lat");
+                
+                res.put("lon", Double.parseDouble(lon));
+                res.put("lat", Double.parseDouble(lat));
+            }
+        }
+        
+        return res;
         
     }
 }

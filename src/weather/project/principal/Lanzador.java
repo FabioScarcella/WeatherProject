@@ -5,6 +5,8 @@
  */
 package weather.project.principal;
 
+import java.util.Map;
+import java.util.Scanner;
 import weather.project.controlador.ApiConnector;
 import weather.project.controlador.BuscadorCiudad;
 
@@ -15,19 +17,21 @@ import weather.project.controlador.BuscadorCiudad;
 public class Lanzador {
     
     public static void main(String[] args){
-        //Latitud: 41.7516, Longitud: 1.90326 de navarcles para testear
-        /*ApiConnector apiCon = new ApiConnector();
-        String temp = apiCon.getTemperatura("41.7516", "1.90326");
+        String userInput;
+        Scanner scanner = new Scanner(System.in);
         
-        System.out.println(temp);*/
+        userInput = scanner.nextLine();
         
-        BuscadorCiudad buscadorCiudad = new BuscadorCiudad("Madrid");
+        BuscadorCiudad buscadorCiudad = new BuscadorCiudad();
         
-        try{
-            buscadorCiudad.getCiudad();
-        }catch(Exception e){
-            
-        }
+        Map<String, Double> coordinates = buscadorCiudad.getCoordinates(userInput);
+        
+        
+        ApiConnector apiCon = new ApiConnector();
+        String temp = apiCon.getTemperatura(coordinates.get("lat").toString(), coordinates.get("lon").toString());
+        
+        System.out.println("Lat: " + coordinates.get("lat").toString() + " Lon: "
+        + coordinates.get("lon").toString() + " temp: " + temp);
         
         
     }

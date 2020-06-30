@@ -19,10 +19,12 @@ import java.util.List;
  * @author fabio
  */
 public class ApiConnector {
-    final String apikey = "e147808f8dac46f6d54ea065275b31df";
+    final String apikey;
+    final static String apiKeyNombre = "apiConnectorKey";
     
     public ApiConnector(){
-        
+        LeerArchivos leerArchivos = new LeerArchivos();
+        apikey = leerArchivos.getAValue(apiKeyNombre);
     }
     
     public String getTemperatura(String latitud, String longitud){
