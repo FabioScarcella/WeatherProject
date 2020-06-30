@@ -10,6 +10,7 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class ApiConnector {
         apikey = leerArchivos.getAValue(apiKeyNombre);
     }
     
-    public String getTemperatura(String latitud, String longitud){
-        String temperatura = "Error";
+    public List<String> getTemperatura(String latitud, String longitud){
+        List<String> temperatura = new ArrayList<String>();
         
         try{
             temperatura = getJSONTemperatura(latitud, longitud);
@@ -41,7 +42,7 @@ public class ApiConnector {
         }
     }
     
-    private String getJSONTemperatura(String latitud, String longitud) throws MalformedURLException, IOException{
+    private List<String> getJSONTemperatura(String latitud, String longitud) throws MalformedURLException, IOException{
         String sUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+ 
                 latitud + "&lon=" + longitud + "&units=metric&appid=" + apikey;
         
@@ -69,6 +70,12 @@ public class ApiConnector {
             mapaCurrent.put(sSplit[0].substring(1, sSplit[0].length() - 1), sSplit[1]);
         }
         
-        return mapaCurrent.get("temp") + " " + mapaCurrent.get("main");
+        List<String> datos = new ArrayList<String>();
+        datos.add(mapaCurrent.get("temp"));
+        datos.add(mapaCurrent.get("feels_like"));
+        datos.add(mapaCurrent.get("main").substring(1, mapaCurrent.get("main").length() - 1));
+        
+        
+        return datos;
     }
 }

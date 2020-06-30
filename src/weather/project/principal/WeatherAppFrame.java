@@ -5,6 +5,8 @@
  */
 package weather.project.principal;
 
+import weather.project.controlador.MuestraDatos;
+import weather.project.vistas.PanelCiudades;
 import weather.project.vistas.PanelNuevaCiudad;
 
 /**
@@ -38,6 +40,7 @@ public class WeatherAppFrame extends javax.swing.JFrame {
         mnuCliente = new javax.swing.JMenu();
         mnuAltaCliente = new javax.swing.JMenuItem();
         mnuEmpleados = new javax.swing.JMenu();
+        mnuListaCiudades = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 600));
@@ -63,12 +66,26 @@ public class WeatherAppFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuCliente);
 
-        mnuEmpleados.setText("Empleados");
+        mnuEmpleados.setText("Ciudades");
         mnuEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnuEmpleadosMouseClicked(evt);
             }
         });
+
+        mnuListaCiudades.setText("Ver Ciudades");
+        mnuListaCiudades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mnuListaCiudadesMousePressed(evt);
+            }
+        });
+        mnuListaCiudades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuListaCiudadesActionPerformed(evt);
+            }
+        });
+        mnuEmpleados.add(mnuListaCiudades);
+
         jMenuBar1.add(mnuEmpleados);
 
         setJMenuBar(jMenuBar1);
@@ -92,6 +109,18 @@ public class WeatherAppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_mnuAltaClienteMousePressed
+
+    private void mnuListaCiudadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuListaCiudadesMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuListaCiudadesMousePressed
+
+    private void mnuListaCiudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuListaCiudadesActionPerformed
+        // TODO add your handling code here:
+        limpiarPanel();
+        PanelCiudades panelCiudades = new PanelCiudades(this);
+        panelContenedor.add(panelCiudades, java.awt.BorderLayout.CENTER);
+        pack();
+    }//GEN-LAST:event_mnuListaCiudadesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,6 +162,7 @@ public class WeatherAppFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuAltaCliente;
     private javax.swing.JMenu mnuCliente;
     private javax.swing.JMenu mnuEmpleados;
+    private javax.swing.JMenuItem mnuListaCiudades;
     private javax.swing.JPanel panelContenedor;
     // End of variables declaration//GEN-END:variables
 }
