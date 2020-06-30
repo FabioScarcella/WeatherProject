@@ -17,7 +17,7 @@ import weather.project.controlador.BuscadorCiudad;
 public class Lanzador {
     
     public static void main(String[] args){
-        String userInput;
+        /*String userInput;
         Scanner scanner = new Scanner(System.in);
         
         userInput = scanner.nextLine();
@@ -31,8 +31,11 @@ public class Lanzador {
         String temp = apiCon.getTemperatura(coordinates.get("lat").toString(), coordinates.get("lon").toString());
         
         System.out.println("Lat: " + coordinates.get("lat").toString() + " Lon: "
-        + coordinates.get("lon").toString() + " temp: " + temp);
+        + coordinates.get("lon").toString() + " temp: " + temp);*/
         
+        
+        WeatherAppFrame frame = new WeatherAppFrame();
+        frame.setVisible(true);
         
     }
     
