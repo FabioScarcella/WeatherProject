@@ -17,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
+import weather.project.vistas.PanelEliminarCiudad;
 
 /**
  *
@@ -24,6 +25,7 @@ import org.json.simple.parser.JSONParser;
  */
 public class LeerArchivos {
     private Map<String, String> apikeys = new HashMap();
+    private PanelEliminarCiudad frame;
 
 
     public LeerArchivos(){
@@ -54,5 +56,4 @@ public class LeerArchivos {
     public String getAValue(String key){
         return apikeys.get(key);
     }
-    
 }

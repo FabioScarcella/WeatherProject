@@ -28,7 +28,7 @@ public class PanelCiudades extends javax.swing.JPanel {
     
     private void cargaTabla(){
          tabla = new DefaultTableModel(new String[]{
-            "Ciudad", "Temperatura", "Feels Like", "Estado"
+            "Ciudad", "Temperatura", "Feels Like", "Estado", "Maxima", "Minima"
         }, 0);
         
         tblCiudades.setModel(tabla);  

@@ -28,11 +28,11 @@ public class ApiConnector {
         apikey = leerArchivos.getAValue(apiKeyNombre);
     }
     
-    public List<String> getTemperatura(String latitud, String longitud){
+    public List<String> getTemperatura(String latitud, String longitud, List<String> excludes){
         List<String> temperatura = new ArrayList<String>();
         
         try{
-            temperatura = getJSONTemperatura(latitud, longitud);
+            temperatura = getJSONTemperatura(latitud, longitud, excludes);
         }catch(MalformedURLException me){
             me.printStackTrace();
         }catch(IOException ie){
@@ -42,10 +42,16 @@ public class ApiConnector {
         }
     }
     
-    private List<String> getJSONTemperatura(String latitud, String longitud) throws MalformedURLException, IOException{
+    private List<String> getJSONTemperatura(String latitud, String longitud, List<String> excludes) throws MalformedURLException, IOException{
         String sUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+ 
-                latitud + "&lon=" + longitud + "&units=metric&appid=" + apikey;
-        
+                latitud + "&lon=" + longitud + "&exclude=";
+
+        for(int i = 0; i < excludes.size(); ++i){
+            sUrl+= excludes.get(i) + ",";
+            if(i == excludes.size() - 1){
+                sUrl += "&units=metric&appid=" + apikey;
+            }
+        }
         //Conectamos con la url mediante las librerias nativas de Java
         URL url = new URL(sUrl);
         URLConnection request = url.openConnection();
@@ -70,10 +76,36 @@ public class ApiConnector {
             mapaCurrent.put(sSplit[0].substring(1, sSplit[0].length() - 1), sSplit[1]);
         }
         
+        
+       String valoresDaily = rootObj.get("daily").toString();
+       
+       valoresDaily = valoresDaily.replace("{", "");
+       valoresDaily = valoresDaily.replace("}", "");
+       valoresDaily = valoresDaily.replace("[", "");
+       valoresDaily = valoresDaily.replace("]", "");
+       
+       String[] listaDaily = valoresDaily.split(",");
+        
+        
+        for(String s:listaDaily){
+            String[] sSplit = s.split(":");
+            //con el metodo substring() borramos las " " que estaban al principio
+            if("min".equals(sSplit[0].substring(1, sSplit[0].length() - 1)) || 
+                    "max".equals(sSplit[0].substring(1, sSplit[0].length() - 1))){
+                
+                mapaCurrent.put(sSplit[0].substring(1, sSplit[0].length() - 1), sSplit[1]);
+            }
+            
+        }
+        
+        
         List<String> datos = new ArrayList<String>();
+        
         datos.add(mapaCurrent.get("temp"));
         datos.add(mapaCurrent.get("feels_like"));
         datos.add(mapaCurrent.get("main").substring(1, mapaCurrent.get("main").length() - 1));
+        datos.add(mapaCurrent.get("min"));
+        datos.add(mapaCurrent.get("max"));
         
         
         return datos;

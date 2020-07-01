@@ -7,6 +7,7 @@ package weather.project.principal;
 
 import weather.project.controlador.MuestraDatos;
 import weather.project.vistas.PanelCiudades;
+import weather.project.vistas.PanelEliminarCiudad;
 import weather.project.vistas.PanelNuevaCiudad;
 
 /**
@@ -39,6 +40,7 @@ public class WeatherAppFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuCliente = new javax.swing.JMenu();
         mnuAltaCliente = new javax.swing.JMenuItem();
+        mnuEliminarCiudad = new javax.swing.JMenuItem();
         mnuEmpleados = new javax.swing.JMenu();
         mnuListaCiudades = new javax.swing.JMenuItem();
 
@@ -63,6 +65,19 @@ public class WeatherAppFrame extends javax.swing.JFrame {
             }
         });
         mnuCliente.add(mnuAltaCliente);
+
+        mnuEliminarCiudad.setText("Delete");
+        mnuEliminarCiudad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mnuEliminarCiudadMousePressed(evt);
+            }
+        });
+        mnuEliminarCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEliminarCiudadActionPerformed(evt);
+            }
+        });
+        mnuCliente.add(mnuEliminarCiudad);
 
         jMenuBar1.add(mnuCliente);
 
@@ -122,6 +137,18 @@ public class WeatherAppFrame extends javax.swing.JFrame {
         pack();
     }//GEN-LAST:event_mnuListaCiudadesActionPerformed
 
+    private void mnuEliminarCiudadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuEliminarCiudadMousePressed
+        // TODO add your handling code here:
+        limpiarPanel();
+        PanelEliminarCiudad panelEliminarCiudad = new PanelEliminarCiudad();
+        panelContenedor.add(panelEliminarCiudad, java.awt.BorderLayout.CENTER);
+        pack();
+    }//GEN-LAST:event_mnuEliminarCiudadMousePressed
+
+    private void mnuEliminarCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEliminarCiudadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuEliminarCiudadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -161,6 +188,7 @@ public class WeatherAppFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnuAltaCliente;
     private javax.swing.JMenu mnuCliente;
+    private javax.swing.JMenuItem mnuEliminarCiudad;
     private javax.swing.JMenu mnuEmpleados;
     private javax.swing.JMenuItem mnuListaCiudades;
     private javax.swing.JPanel panelContenedor;

@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/controlador/BuscadorCiudad.java</file>
-            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/principal/Lanzador.java</file>
+            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/vistas/PanelCiudades.java</file>
+            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/principal/WeatherAppFrame.java</file>
+            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/vistas/PanelEliminarCiudad.java</file>
+            <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/controlador/MuestraDatos.java</file>
             <file>file:/home/fabio/NetBeansProjects/WeatherGit/WeatherProject/src/weather/project/controlador/ApiConnector.java</file>
         </group>
     </open-files>

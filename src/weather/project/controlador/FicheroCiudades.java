@@ -13,17 +13,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import weather.project.vistas.PanelEliminarCiudad;
 import weather.project.vistas.PanelNuevaCiudad;
 
 /**
  *
  * @author fabio
  */
-public class AñadirNuevaCiudad {
+public class FicheroCiudades {
     PanelNuevaCiudad panel;
+    PanelEliminarCiudad eliminarPanel;
     
-    public AñadirNuevaCiudad(PanelNuevaCiudad panel){
+    public FicheroCiudades(PanelNuevaCiudad panel){
         this.panel = panel;
+    }
+    
+    public FicheroCiudades(PanelEliminarCiudad panel){
+        this.eliminarPanel = panel;
     }
     
     public void añadirCiudad(){
@@ -67,7 +73,39 @@ public class AñadirNuevaCiudad {
         }catch(IOException ioe){
             ioe.printStackTrace();
         }finally{
-            panel.setTxtCiudad("");
+            if(panel != null){
+                panel.setTxtCiudad("");
+            }else{
+                eliminarPanel.setTxtCiudad("");
+            }
+            
+        }
+    }
+    
+    public void eliminarCiudad(){
+        List<String> ciudades = new ArrayList<String>();
+        
+        BufferedReader reader;
+        
+        try{
+            reader = new BufferedReader(new FileReader("cities.txt"));
+            
+            String line = reader.readLine();
+            String ciudadEliminar = eliminarPanel.getTxtEliminar().getText();
+            
+            while(line != null){
+                if(!ciudadEliminar.equals(line)) ciudades.add(line);
+                line = reader.readLine();
+            }
+            
+            reader.close();
+            
+            guardarCiudades(ciudades);
+            
+        }catch(FileNotFoundException fne){
+            fne.printStackTrace();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
         }
     }
     

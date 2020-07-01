@@ -5,7 +5,7 @@
  */
 package weather.project.vistas;
 
-import weather.project.controlador.AñadirNuevaCiudad;
+import weather.project.controlador.FicheroCiudades;
 import weather.project.principal.WeatherAppFrame;
 
 /**
@@ -92,7 +92,7 @@ public class PanelNuevaCiudad extends javax.swing.JPanel {
 
     private void btnConfirmaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmaMousePressed
         // TODO add your handling code here:
-        AñadirNuevaCiudad añadirNuevaCiudad = new AñadirNuevaCiudad(this);
+        FicheroCiudades añadirNuevaCiudad = new FicheroCiudades(this);
         añadirNuevaCiudad.añadirCiudad();
     }//GEN-LAST:event_btnConfirmaMousePressed
 

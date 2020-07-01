@@ -37,13 +37,18 @@ public class MuestraDatos {
         
         for(String ciudad: ciudades){
             Map<String, Double> coordinates = buscadorCiudad.getCoordinates(ciudad);
-            List<String> datos = apiConnector.getTemperatura(coordinates.get("lat").toString(), coordinates.get("lon").toString());
+            List<String> excludes = new ArrayList<String>();
+            excludes.add("hourly");
+            excludes.add("minuetly");
+            List<String> datos = apiConnector.getTemperatura(coordinates.get("lat").toString(), coordinates.get("lon").toString(), excludes);
             Vector vector = new Vector();
             
             vector.add(ciudad);
             vector.add(datos.get(0));
             vector.add(datos.get(1));
             vector.add(datos.get(2));
+            vector.add(datos.get(4));
+            vector.add(datos.get(3));
             
             tabla.addRow(vector);
         }
